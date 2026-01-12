@@ -66,9 +66,92 @@ O menu principal apresenta nove opções, permitindo ao utilizador escolher a op
 
 A função `input_user()` valida as entradas, garantindo que apenas valores inteiros dentro do intervalo permitido são aceites, prevenindo erros e interrupções inesperadas.
 
+Adicionalmente, o programa recorre à utilização de **cores no terminal**, através de códigos ANSI, com o objetivo de melhorar a legibilidade e a experiência do utilizador. Diferentes cores são utilizadas para distinguir menus, mensagens informativas, confirmações de sucesso e mensagens de erro, permitindo uma identificação visual imediata do tipo de informação apresentada.
+
+Esta abordagem contribui para uma interação mais intuitiva e organizada, facilitando a utilização da aplicação em ambiente de consola. A utilização de cores, embora não seja essencial para a lógica do programa, demonstra preocupação com a usabilidade e com a clareza da comunicação com o utilizador, reforçando a qualidade global da aplicação.
+
 ---
 
-## 4. Modelação das Tarefas – Classe `Task`
+## 4. Utilização de Ciclos e Estruturas Condicionais
+
+O programa **ToDUM** recorre de forma extensiva a **ciclos** e **estruturas condicionais**, fundamentais para garantir o correto funcionamento da aplicação, a interação contínua com o utilizador e a validação de dados.
+
+### 4.1 Ciclos (`while` e `for`)
+
+#### Ciclo `while`
+
+O ciclo `while` é utilizado principalmente para:
+
+- Manter o programa em execução até o utilizador optar por sair;
+- Repetir pedidos de entrada sempre que o utilizador introduz dados inválidos;
+- Permitir múltiplas operações consecutivas sem reiniciar o programa.
+
+Exemplos de utilização incluem:
+
+- O ciclo principal da função `to_do()`, que mantém o menu ativo até o utilizador escolher a opção de saída;
+- A validação de opções no menu e nos filtros, garantindo que apenas valores válidos são aceites;
+- A função `editar_campos()`, que permite ao utilizador realizar várias alterações consecutivas à mesma tarefa.
+
+Este tipo de ciclo é essencial para assegurar uma interação contínua e controlada com o utilizador.
+
+#### Ciclo `for`
+
+O ciclo `for` é utilizado sempre que é necessário percorrer coleções de dados, nomeadamente o dicionário que armazena as tarefas.
+
+É utilizado, por exemplo, para:
+
+- Listar todas as tarefas existentes;
+- Aplicar filtros por estado, prioridade ou categoria;
+- Guardar e carregar tarefas a partir de ficheiros JSON.
+
+A utilização do ciclo `for` permite percorrer todas as tarefas de forma eficiente e organizada.
+
+---
+
+### 4.2 Estruturas Condicionais (`if`, `elif`, `else`)
+
+As estruturas condicionais desempenham um papel central na lógica do programa, permitindo a tomada de decisões com base nas escolhas do utilizador ou no estado das tarefas.
+
+São utilizadas, entre outros contextos, para:
+
+- Executar diferentes funcionalidades consoante a opção escolhida no menu;
+- Verificar se existem tarefas antes de executar operações sobre elas;
+- Atualizar automaticamente a data de conclusão quando uma tarefa é marcada como concluída;
+- Apresentar mensagens informativas ou de erro conforme a situação.
+
+A estrutura `if / elif / else` permite que o programa reaja de forma adequada a cada situação, garantindo robustez e prevenindo erros de execução.
+
+---
+
+### 4.3 Validação de Dados com Ciclos e Condições
+
+A combinação de ciclos com estruturas condicionais é utilizada para validar todas as entradas do utilizador. Sempre que um valor inválido é introduzido, o programa solicita novamente a entrada correta, evitando falhas ou comportamentos inesperados.
+
+Este mecanismo é aplicado, por exemplo, na validação de:
+
+- Opções do menu;
+- Estados das tarefas;
+- Prioridades;
+- Identificadores de tarefas.
+
+Esta abordagem contribui para a fiabilidade e estabilidade da aplicação.
+
+---
+
+### 4.4 Importância na Estrutura do Programa
+
+O uso adequado de ciclos e condições permite que o programa:
+
+- Seja interativo e dinâmico;
+- Evite encerramentos inesperados;
+- Garanta coerência nos dados;
+- Proporcione uma melhor experiência ao utilizador.
+
+Desta forma, estas estruturas constituem elementos essenciais na implementação do projeto **ToDUM**, demonstrando a correta aplicação dos conceitos fundamentais de programação abordados na unidade curricular.
+
+---
+
+## 5. Modelação das Tarefas – Classe `Task`
 
 A classe `Task` representa cada tarefa individual e inclui os seguintes atributos:
 
@@ -84,7 +167,7 @@ O método `__repr__()` foi implementado para apresentar a tarefa de forma clara 
 
 ---
 
-## 5. Gestão de Identificadores – Classe `IDGenerator`
+## 6. Gestão de Identificadores – Classe `IDGenerator`
 
 A classe `IDGenerator` garante que cada tarefa recebe um identificador único e sequencial. Sempre que uma nova tarefa é criada, o método `next()` incrementa automaticamente o ID.
 
@@ -92,14 +175,14 @@ Quando tarefas são carregadas a partir de um ficheiro, o gerador ajusta‑se ao
 
 ---
 
-## 6. Funcionalidades Principais
+## 7. Funcionalidades Principais
 
-### 6.1 Listagem de Tarefas
+### 7.1 Listagem de Tarefas
 
 Apresenta todas as tarefas existentes, ordenadas por identificador.  
 Se não existirem tarefas registadas, o utilizador é informado.
 
-### 6.2 Adição de Tarefas
+### 7.2 Adição de Tarefas
 
 Permite criar uma nova tarefa, solicitando:
 
@@ -110,12 +193,12 @@ Permite criar uma nova tarefa, solicitando:
 
 A data de criação é registada automaticamente.
 
-### 6.3 Atualização do Estado
+### 7.3 Atualização do Estado
 
 Permite alterar o estado de uma tarefa.  
 Quando esta é marcada como *concluída*, a data de conclusão é automaticamente registada.
 
-### 6.4 Edição de Campos
+### 7.4 Edição de Campos
 
 O utilizador pode editar individualmente:
 
@@ -126,13 +209,13 @@ O utilizador pode editar individualmente:
 
 É possível realizar várias alterações seguidas sem regressar ao menu principal.
 
-### 6.5 Remoção de Tarefas
+### 7.5 Remoção de Tarefas
 
 Remove definitivamente uma tarefa após validação do respetivo identificador.
 
 ---
 
-## 7. Filtragem de Tarefas
+## 8. Filtragem de Tarefas
 
 O sistema permite filtrar tarefas com base em:
 
@@ -145,14 +228,14 @@ Se não forem encontradas tarefas que correspondam ao filtro aplicado, o utiliza
 
 ---
 
-## 8. Persistência de Dados
+## 9. Persistência de Dados
 
-### 8.1 Guardar Tarefas
+### 9.1 Guardar Tarefas
 
 As tarefas podem ser guardadas num ficheiro JSON.  
 Cada objeto `Task` é convertido num dicionário através de `vars()`, garantindo uma serialização correta.
 
-### 8.2 Carregar Tarefas
+### 9.2 Carregar Tarefas
 
 Permite recuperar tarefas previamente guardadas.  
 O programa inclui tratamento de exceções para lidar com:
@@ -165,7 +248,7 @@ As tarefas carregadas são reconstruídas como objetos `Task`.
 
 ---
 
-## 9. Validação de Dados e Tratamento de Erros
+## 10. Validação de Dados e Tratamento de Erros
 
 Ao longo do programa, são aplicados mecanismos de validação que evitam:
 
@@ -177,9 +260,17 @@ Sempre que ocorre um erro, o utilizador recebe mensagens claras e informativas, 
 
 ---
 
-## 10. Conclusão
+## 11. Conclusão
 
-O projeto **ToDUM** cumpre os objetivos definidos, demonstrando a aplicação prática de conceitos essenciais de programação em Python, como orientação a objetos, modularização, validação e persistência de dados.
+O projeto **ToDUM – Gestor de Tarefas em Python** cumpre de forma eficaz os objetivos definidos no contexto académico universitário, demonstrando a aplicação prática e consistente dos principais conceitos abordados ao longo da unidade curricular.
+
+Ao longo do desenvolvimento do programa, foi possível aplicar conhecimentos fundamentais da linguagem Python, nomeadamente a utilização de **programação orientada a objetos**, através da criação de classes para modelação de dados, bem como a implementação de **funções modulares**, que contribuem para a clareza, organização e manutenção do código.
+
+A utilização de **ciclos e estruturas condicionais** revelou-se essencial para garantir uma interação contínua com o utilizador, permitir a validação rigorosa das entradas e assegurar a correta execução das diferentes funcionalidades do sistema. Adicionalmente, a implementação de **tratamento de exceções** contribui para a robustez da aplicação, prevenindo falhas inesperadas durante a execução.
+
+A persistência de dados através de ficheiros no formato **JSON** permite guardar e recuperar informação de forma eficiente, tornando a aplicação funcional e reutilizável entre diferentes execuções.
+
+Em suma, o projeto apresenta uma solução funcional, coerente e extensível para a gestão de tarefas em ambiente de consola. Constitui uma base sólida para futuras melhorias, como a introdução de novos critérios de organização, otimização da interface com o utilizador ou desenvolvimento de uma interface gráfica, reforçando assim o seu valor enquanto trabalho académico e enquanto aplicação prática.
 
 ---
 

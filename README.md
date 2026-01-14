@@ -171,7 +171,7 @@ A aplicação utiliza códigos ANSI para apresentar mensagens no terminal com di
 
 ## 4.2 Validação Robusta das Entradas
 
-Foram implementados mecanismos de validação rigorosa das entradas do utilizador, recorrendo à combinação de ciclos `while` com estruturas condicionais e tratamento de exceções (`try/except`). Este método garante que apenas valores válidos são aceites, prevenindo erros de execução e assegurando a estabilidade da aplicação. Permite também que o utilizador verifique a sua escolha antes de ações destrutivas, tais como sair do programa ou que decida se pretende continuar a alterar as características das tarefas na função `editar_campos()`.
+Foram implementados mecanismos de validação rigorosa das entradas do utilizador, recorrendo à combinação de ciclos `while` com estruturas condicionais e tratamento de exceções (`try/except`). Este método garante que apenas valores válidos são aceites, prevenindo erros de execução e assegurando a estabilidade da aplicação. Permite também que o utilizador verifique a sua escolha antes de ações destrutivas, tais como sair do programa ou remover tarefas. Com a validação robusta de entradas o utilizador também pode decidir se pretende continuar a alterar as características das tarefas na função `editar_campos()`.
 
 ## 4.3 Função `filtrar_todos()`
 

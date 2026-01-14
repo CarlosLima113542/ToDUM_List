@@ -164,7 +164,7 @@ A organização em funções permitiu-nos criar uma aplicação modular onde cad
 - - **`verificar_escolha()`**: Esta função determina se a escolha da característica a alterar em **`editar_campos()`** é válida. Por exemplo, se o utilizador tentar escrever uma característica inexistente, esta função faz com que ele entenda o seu erro. Esta função também se insere na nossa decisão de separar o código em funções menores, permitindo a modularidade.
 
 
-- **`guardar()` e `carregar()`:** Estas funções tratam da "memória" do ToDUM. Decidimos que o carregamento deve ser automático no início e o salvamento deve ser simples, para que a persistência seja algo natural e transparente para quem usa a aplicação.
+- **`guardar()` e `carregar()`:** Estas funções tratam da "memória" do ToDUM. Decidimos que o carregamento deve ser automático no início e o salvamento deve ser simples e quando o utilizador pretender, para que a persistência seja algo natural e transparente para quem usa a aplicação.
 ---
 
 ## 3.4 Considerações sobre o Design

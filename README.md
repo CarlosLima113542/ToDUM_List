@@ -192,6 +192,7 @@ A aplicação utiliza códigos ANSI, como por exemplo `\033[92m` (verde), para a
 Foram implementados mecanismos de validação rigorosa das entradas do utilizador, recorrendo à combinação de ciclos `while` com estruturas condicionais e tratamento de exceções (`try/except`). Este método garante que apenas valores válidos são aceites, prevenindo erros de execução e assegurando a estabilidade da aplicação. Permite também que o utilizador verifique a sua escolha antes de ações destrutivas, tais como sair do programa ou remover tarefas. Com a validação robusta de entradas o utilizador também pode decidir se pretende continuar a alterar as características das tarefas na função `editar_campos()`.
 Tome-se como exemplo a função `verify_id()`: 
 
+```
 def verify_id(tasks):
     if not tasks:
         print ("Nenhuma tarefa foi encontrada.")
@@ -206,6 +207,7 @@ def verify_id(tasks):
                     print(f'{red}Erro \u274C{reset} : Esse ID não existe na lista.')
             except ValueError:
                 print(f'{red}Erro \u274C{reset}: Por favor, introduza apenas números inteiros.')
+```
 
 ## 4.3 Função `filtrar_todos()`
 

@@ -79,29 +79,36 @@ A aplicação permite:
 
 O desenvolvimento focou-se em cumprir integralmente os requisitos do enunciado, assegurando que a aplicação fosse não só funcional, mas também fiável:
 
-
-- **Listar tarefas:** Exibe todos os registos de forma organizada. Optámos por uma visualização tabular no terminal para que o utilizador consiga identificar rapidamente o estado de cada projeto.
-
-
-- **Adicionar nova tarefa:** Permite a criação de novos registos. O sistema assume o trabalho de gerar IDs e datas de criação, para que o utilizador se foque apenas na descrição e prioridade.
+### Listar tarefas
+Exibe todos os registos de forma organizada. Optámos por uma visualização tabular no terminal para que o utilizador consiga identificar rapidamente o estado de cada projeto.
 
 
-- **Atualizar estado:** Essencial para o fluxo de trabalho. Quando uma tarefa passa a "concluída", o código regista o momento exato, garantindo que o histórico de produtividade seja fidedigno.
+### Adicionar nova tarefa
+Permite a criação de novos registos. O sistema assume o trabalho de gerar IDs e datas de criação, para que o utilizador se foque apenas na descrição e prioridade.
 
 
-- **Editar campos:** Fornece flexibilidade ao utilizador para corrigir descrições ou mudar categorias e prioridades, sem ter de apagar e criar a tarefa de novo.
+### Atualizar estado
+Essencial para o fluxo de trabalho. Quando uma tarefa passa a "concluída", o código regista o momento exato, garantindo que o histórico de produtividade seja fidedigno.
 
 
-- **Remover tarefa:** Uma ação destrutiva que exige o ID correto. Implementámos esta função com cautela para garantir que apenas o registo pretendido seja eliminado.
+### Editar campos
+Fornece flexibilidade ao utilizador para corrigir descrições ou mudar categorias e prioridades, sem ter de apagar e criar a tarefa de novo.
 
 
-- **Filtrar tarefas:** Permite isolar o que é urgente ou o que já terminou. A decisão de filtrar por estado, prioridade ou categoria ajuda a manter o foco em listas longas.
+### Remover tarefa
+Uma ação destrutiva que exige o ID correto. Implementámos esta função com cautela para garantir que apenas o registo pretendido seja eliminado.
 
 
-- **Persistência de Dados:** Escolhemos o formato JSON para guardar as tarefas. É uma solução prática que garante que, ao reabrir o programa, tudo esteja exatamente como foi deixado.
+### Filtrar tarefas
+Permite isolar o que é urgente ou o que já terminou. A decisão de filtrar por estado, prioridade ou categoria ajuda a manter o foco em listas longas.
 
 
-- **Menu Interativo:** O programa corre num ciclo contínuo e amigável, guiando o utilizador pelas opções até que este decida encerrar a sessão.
+### Persistência de Dados 
+Escolhemos o formato JSON para guardar as tarefas. É uma solução prática que garante que, ao reabrir o programa, tudo esteja exatamente como foi deixado.
+
+
+### Menu Interativo
+O programa corre num ciclo contínuo e amigável, guiando o utilizador pelas opções até que este decida encerrar a sessão.
 
 
 ---
@@ -119,7 +126,7 @@ Esta classe funciona como o molde de cada tarefa. Em vez de lidar com dados solt
 
 ### Classe `IDGenerator`
 
-Criámos esta classe com o intuito de resolver o problema dos identificadores duplicados. Ela é inteligente o suficiente para verificar quais os IDs já existentes no ficheiro e continuar a sequência corretamente, mesmo após o programa ser reiniciado.
+Criámos esta classe com o intuito de resolver o problema dos identificadores duplicados. Ela é inteligente o suficiente para verificar quais os IDs já existentes no ficheiro e continuar a sequência corretamente, mesmo após o programa ser reiniciado. A função `next()`, dentro desta classe, cada vez que é utilizada, permite que `uid` aumente numa unidade, para que não haja tarefas com ids iguais, sendo mais fácil aceder a qualquer tarefa.
 
 
 ---
@@ -133,6 +140,8 @@ A organização em funções permitiu-nos criar uma aplicação modular onde cad
 
 - **`menu()` e `input_user()`:** O nosso foco aqui foi a clareza. Usamos cores para destacar o que é importante e validamos cada tecla premida pelo utilizador. Se ele digitar algo errado, o programa explica o erro em vez de simplesmente fechar.
 
+- **`filtrar()`**: O objetivo da função é modularizar as funções detinadas à filtração mais específica das características das tarefas. Se, nessa alteração, a escolha do utilizador for incorreta, nomeadamente na filtração dos parâmentros da prioridade e do estado, o programa faz com que o utilizador entenda o porquê desse mesmo erro. Dentro desta função, são utilizadas outras quatro funções: **`filtrar_estado()`**, **`filtrar_prioridade()`** e **`filtrar_cat()`**. Por último, existe também uma função que filtra os três parâmetros em simultâneo: **`filtrar_todos()`**.
+
 
 - **`to_do()`:** É o centro de comando. Decidimos centralizar aqui toda a navegação do menu, o que torna muito mais fácil adicionar novas funcionalidades no futuro sem desorganizar o resto do código.
 
@@ -140,10 +149,19 @@ A organização em funções permitiu-nos criar uma aplicação modular onde cad
 - **`adiciona_tarefa()` e `atualiza_estado()`:** Estas funções gerem a parte "automática" do programa. Decidimos que o utilizador não deve ter a preocupação de inserir datas ou IDs manualmente; o código faz isso por ele, minimizando erros humanos.
 
 
+- **`remover_tarefa()`**: É a função que permite o utilizador remover tarefas anteriormente criadas. Enquanto não existirem tarefas criadas, é impossível remover qualquer tarefa.
+
+
 - **`verify_id()`:** Atua como uma camada de segurança. Antes de qualquer edição ou remoção, esta função confirma se o ID existe, evitando falhas de memória ou comportamentos inesperados do programa.
 
 
 - **`editar_campos()`:** Em vez de forçar o utilizador a reescrever toda a tarefa, criámos uma lógica que permite escolher apenas o que se quer mudar. É uma decisão que respeita o tempo do utilizador e torna a edição muito mais fluida.
+  
+
+- **`atualiza_prioridade()`**: Sempre que o utilizador pretender alterar a prioridade de uma tarefa anteriomente definida, por qualquer que seja o motivo, é-lhe permitida essa alteração através da função **`atualiza_prioridade()`**. Esta função está inserida na função **`editar_campos()`**. Para uma melhor leitura do código, achamos mais prático separar a edição das características em pequenas funções como esta.
+  
+ 
+- - **`verificar_escolha()`**: Esta função determina se a escolha da característica a alterar em **`editar_campos()`** é válida. Por exemplo, se o utilizador tentar escrever uma característica inexistente, esta função faz com que ele entenda o seu erro. Esta função também se insere na nossa decisão de separar o código em funções menores, permitindo a modularidade.
 
 
 - **`guardar()` e `carregar()`:** Estas funções tratam da "memória" do ToDUM. Decidimos que o carregamento deve ser automático no início e o salvamento deve ser simples, para que a persistência seja algo natural e transparente para quem usa a aplicação.
@@ -165,17 +183,34 @@ A organização em funções permitiu-nos criar uma aplicação modular onde cad
 
 Para além dos requisitos base, foram incluídas as seguintes melhorias sugeridas pelo enunciado:
 
-## 4.1 Utilização de Cores no Terminal
+## 4.1 Utilização de Cores e Emojis no Terminal
 
-A aplicação utiliza códigos ANSI para apresentar mensagens no terminal com diferentes cores. Esta abordagem permite distinguir visualmente menus, mensagens informativas, confirmações de sucesso e mensagens de erro, contribuindo para uma leitura mais clara e uma interação mais intuitiva com o utilizador.
+A aplicação utiliza códigos ANSI, como por exemplo `\033[92m` (verde), para apresentar mensagens no terminal com diferentes cores. Para que sejam apresentados emojis no terminal, como por exemplo o de uma cruz vermelha, a fim de mostrar qualquer erro, são utilizados códigos do tipo `\u274C`. Esta abordagem permite distinguir visualmente menus, mensagens informativas, confirmações de sucesso e mensagens de erro, contribuindo para uma leitura mais clara e uma interação mais intuitiva com o utilizador.
 
 ## 4.2 Validação Robusta das Entradas
 
 Foram implementados mecanismos de validação rigorosa das entradas do utilizador, recorrendo à combinação de ciclos `while` com estruturas condicionais e tratamento de exceções (`try/except`). Este método garante que apenas valores válidos são aceites, prevenindo erros de execução e assegurando a estabilidade da aplicação. Permite também que o utilizador verifique a sua escolha antes de ações destrutivas, tais como sair do programa ou remover tarefas. Com a validação robusta de entradas o utilizador também pode decidir se pretende continuar a alterar as características das tarefas na função `editar_campos()`.
+Tome-se como exemplo a função `verify_id()`: 
+
+def verify_id(tasks):
+    if not tasks:
+        print ("Nenhuma tarefa foi encontrada.")
+        return None
+    else:
+        while True:
+            try:
+                id1 = int(input('Escreva o id da tarefa: '))
+                if id1 in tasks:
+                    return id1
+                else:
+                    print(f'{red}Erro \u274C{reset} : Esse ID não existe na lista.')
+            except ValueError:
+                print(f'{red}Erro \u274C{reset}: Por favor, introduza apenas números inteiros.')
 
 ## 4.3 Função `filtrar_todos()`
 
 A função `filtrar_todos()` permite filtrar tarefas através da combinação simultânea de três critérios: estado, prioridade e categoria. Esta funcionalidade possibilita uma pesquisa mais precisa e detalhada, aumentando a flexibilidade do sistema de filtragem em relação aos filtros simples exigidos.
+
 
 ---
 
